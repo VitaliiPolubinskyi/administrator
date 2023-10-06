@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Free rooms</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1 th:text="'Free rooms from ' + ${in} + ' to ' + ${out}"></h1>
+<br/>
+<table>
+    <tbody>
+    <tr>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/rooms/book}">
+                <input type="hidden" name="in" th:value="${in}"/>
+                <input type="hidden" name="out" th:value="${out}"/>
+                <label for="number">Enter room number:</label>
+                <br/>
+                <input type="text" name="roomNumber" th:value="${roomNumber}"
+                       required
+                       id="number" pattern="[0-9]+" minlength="2" title="Min 2 digit characters are required!"
+                       placeholder="Enter room number"/>
+                <br/>
+                <input type="submit" value="Find booking info by room number"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/rooms/book}">
+                <input type="hidden" name="in" th:value="${in}"/>
+                <input type="hidden" name="out" th:value="${out}"/>
+                <label for="class">Enter class type:</label>
+                <br/>
+                <input type="text" name="classType" th:value="${classType}" id="class"
+                       required
+                       pattern="(cheap|medium|expensive|luxury)"
+                       title="Should be 'cheap', 'medium', 'expensive' or 'luxury'!"
+                       placeholder="Literals only!"/>
+                <br/>
+                <input type="submit" value="Find by class type"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th>Room number</th>
+        <th>Class type</th>
+        <th>Price</th>
+        <th>Phone Number</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${rooms}">
+        <td>
+            <a th:href="@{/hotel_california/room/{id}(id=${r.id})}"
+               th:text="${r.roomNumber}"></a>
+        </td>
+        <td th:text="${r.classType}"></td>
+        <td th:text="${r.price}"></td>
+        <td th:text="${r.phoneNumber}"></td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/book/room}">
+                <input type="hidden" name="roomNumber" th:value="${r.roomNumber}"/>
+                <input type="hidden" name="in" th:value="${in}"/>
+                <input type="hidden" name="out" th:value="${out}"/>
+                <input type="submit" value="Book"/>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${rooms.size() == 0}">
+        <td colspan="4">
+            <p style="text-decoration: underline; font-weight: bold; color: red;">
+                Rooms list is empty!</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

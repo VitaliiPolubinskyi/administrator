@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Room booking info</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1 th:text="'Booking info for room ' + ${roomNumber}"></h1>
+<br/>
+<table>
+    <thead>
+    <tr>
+        <th>Guest full name</th>
+        <th>Room number</th>
+        <th>Date of check in</th>
+        <th>Date of check out</th>
+        <th>Guest info</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="i : ${info}">
+        <td th:text="${i[0]}"></td>
+        <td th:text="${i[1]}"></td>
+        <td th:text="${i[2]}"></td>
+        <td th:text="${i[3]}"></td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest/{id}(id=${i[4]})}">
+                <input type="submit" value="Show guest"/>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${info.size() == 0}">
+        <td colspan="5">
+            <p style="text-decoration: underline; font-weight: bold; color: red;">
+                Booking list is empty!</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <p>Find booking info by dates</p>
+            <table>
+                <tbody>
+                <form th:method="GET" th:action="@{/hotel_california/booking/room_info}">
+                    <input type="hidden" name="roomNumber" th:value="${roomNumber}"/>
+                    <label for="in">Enter check-in date:</label>
+                    <br/>
+                    <input type="date" name="in" th:value="${in}" id="in"/>
+                    <br/>
+                    <label for="out">Enter check-out date:</label>
+                    <br/>
+                    <input type="date" name="out" th:value="${out}" id="out"/>
+                    <br/>
+                    <input type="submit" value="Find info"/>
+                </form>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

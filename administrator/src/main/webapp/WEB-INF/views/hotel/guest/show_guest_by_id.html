@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Guests</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1 th:text="'Information about ' + ${guest.fullName}"></h1>
+<br/>
+<table>
+    <thead>
+    <tr>
+        <th>Full Name</th>
+        <th>Passport</th>
+        <th>Phone number</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${guest.fullName}"></td>
+        <td th:text="${guest.passport}"></td>
+        <td th:text="${guest.phoneNumber}"></td>
+        <td th:text="${guest.email}"></td>
+        <td th:text="${guest.status}"></td>
+        <td th:text="${guest.notes}"></td>
+        <td>
+            <form id="deleteForm" th:method="DELETE" th:action="@{/hotel_california/guest/{id}(id=${guest.id})}">
+                <input type="submit" value="Delete guest" onclick="confirmSubmit('deleteForm')"/>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <br/>
+    </tr>
+    <th colspan="7">
+        <p style="text-decoration: underline; font-weight: bold; color: black;">
+            Edit guest information</p>
+    </th>
+    </tr>
+    <tr>
+        <form id="editForm" th:method="PATCH"
+              th:action="@{/hotel_california/guest/{id}(id=${guest.id})}"
+              th:object="${guest}">
+            <td>
+                <label for="fullName">Enter full name:</label>
+                <br/>
+                <input type="text" th:field="*{fullName}" id="fullName"
+                       required
+                       pattern="^.*\S+.*$"
+                       title="Should have at least one non-space character!"
+                       placeholder="Full name"/>
+            </td>
+            <td>
+                <label for="passport">Enter passport data:</label>
+                <br/>
+                <input type="text" th:field="*{passport}" id="passport"
+                       required
+                       pattern="^[a-zA-Z0-9]+$"
+                       title="Should have literals and digits only!"
+                       placeholder="Literals/digits only!"/>
+            </td>
+            <td>
+                <label for="phoneNumber">Enter phone number:</label>
+                <br/>
+                <input type="text" th:field="*{phoneNumber}" id="phoneNumber"
+                       required
+                       pattern="^\(\d{1,3}\)\d{9}$"
+                       title="Invalid format! Should be *(1-3 digits)9digits*!"
+                       placeholder="([1-3]x)xxxxxxxxx"/>
+            </td>
+            <td>
+                <label for="email">Enter email:</label>
+                <br/>
+                <input type="text" th:field="*{email}" id="email"
+                       required
+                       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                       title="Invalid email address!"
+                       placeholder="xxx@xxx.xxx"/>
+            </td>
+            <td>
+                <label for="status">Enter guest status:</label>
+                <br/>
+                <input type="text" th:field="*{status}" id="status"
+                       required
+                       pattern="(current|past|future)"
+                       title="Should be one of: current, past, future!"
+                       placeholder="current/past/future"/>
+            </td>
+            <td>
+                <label for="notes">Enter special notes:</label>
+                <br/>
+                <input type="text" th:field="*{notes}" id="notes"
+                       placeholder="great, blocked ect."/>
+            </td>
+            <td>
+                <input type="submit" value="Update guest" onclick="confirmSubmit('editForm')"/>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+
+
+<script>
+        function confirmSubmit(formId) {
+            if (confirm("Are you sure?")) {
+                document.getElementById(formId).submit();
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        }
+</script>
+
+</body>
+</html>

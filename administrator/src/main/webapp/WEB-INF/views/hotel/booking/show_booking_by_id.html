@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1 th:text="'Information about booking # ' + ${object[0]}"></h1>
+<br/>
+<table>
+    <thead>
+    <tr>
+        <th>Guest full name</th>
+        <th>Room number</th>
+        <th>Date of check in</th>
+        <th>Date of check out</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${object[1]}"></td>
+        <td th:text="${object[2]}"></td>
+        <td th:text="${object[3]}"></td>
+        <td th:text="${object[4]}"></td>
+        <td>
+            <form id="deleteForm" th:method="DELETE" th:action="@{/hotel_california/booking/{id}(id=${object[0]})}">
+                <input type="submit" value="Delete booking" onclick="confirmSubmit('deleteForm')"/>
+            </form>
+        </td>
+    </tr>
+    <tr>
+    <tr>
+        <br/>
+    </tr>
+    <th colspan="5">
+        <p style="text-decoration: underline; font-weight: bold; color: black;">
+            Edit booking information</p>
+    </th>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+        <table>
+            <tbody>
+            <tr>
+                <form id="editForm" th:method="PATCH"
+                      th:action="@{/hotel_california/booking/{id}(id=${object[0]})}">
+                    <td>
+                        <label for="in">Enter check-in date:</label>
+                        <br/>
+                        <input type="date" name="in" th:value="${object[3]}" required id="in"/>
+                    </td>
+                    <td>
+                        <label for="out">Enter check-out date:</label>
+                        <br/>
+                        <input type="date" name="out" th:value="${object[4]}" required id="out"/>
+                    </td>
+                    <td>
+                        <input type="hidden" name="guestId" th:value="${object[5]}"/>
+                        <input type="hidden" name="roomId" th:value="${object[6]}"/>
+                        <input type="submit" value="Update booking" onclick="confirmSubmit('editForm')"/>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function confirmSubmit(formId) {
+       if (confirm("Are you sure?")) {
+           document.getElementById(formId).submit();
+        } else {
+           event.preventDefault();
+           return false;
+        }
+    }
+
+</script>
+
+</body>
+</html>

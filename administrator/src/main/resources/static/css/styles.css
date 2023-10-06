@@ -1,0 +1,67 @@
+/* Стиль таблицы */
+table {
+    margin: 0 auto; /* Устанавливаем отступ слева и справа на auto */
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Стиль ячеек и заголовков */
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center; /* Центрируем содержимое по горизонтали */
+    vertical-align: middle; /* Центрируем содержимое по вертикали */
+}
+
+/* Стиль заголовков */
+th {
+    background-color: #f2f2f2;
+}
+
+/* Стиль текста */
+p {
+    color: black;
+    font-size: 18px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px; /* Размер шрифта */
+    font-weight: bold; /* Жирное начертание шрифта */
+    color: #333; /* Цвет текста (можно заменить на другой цвет по вашему выбору) */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+input[type="submit"] {
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста на кнопке */
+    padding: 10px 20px; /* Отступы внутри кнопки (верх/низ, лево/право) */
+    border: none; /* Убирает границу у кнопки */
+    cursor: pointer; /* Изменяет форму курсора при наведении на кнопку */
+    border-radius: 4px; /* Скругление углов кнопки */
+    text-decoration: none; /* Убирает подчеркивание текста внутри кнопки */
+    font-size: 14px; /* Размер текста на кнопке */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
+}
+
+/* Стиль кнопки "submit" при наведении */
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Изменение цвета фона при наведении на кнопку */
+}
+
+/* Стиль ссылок */
+a {
+    color: red; /* Цвет ссылок */
+    text-decoration: none; /* Убирает подчеркивание ссылок */
+}
+
+/* Стиль наведения на ссылки */
+a:hover {
+    text-decoration: underline; /* Подчеркивание ссылок при наведении */
+}
+
+input[type="text"]::placeholder {
+    text-align: center; /* Центрирует текст плейсхолдера по горизонтали */
+    padding: 0; /* Удаляет отступы */
+}
+

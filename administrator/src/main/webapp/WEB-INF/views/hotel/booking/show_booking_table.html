@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking table</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1>
+    <span th:if="${#strings.isEmpty(str1) && #strings.isEmpty(str2)}">General booking list</span>
+    <span th:if="${str1 == 'found' && #strings.isEmpty(str2)}">Found booking list</span>
+    <span th:if="${str1 == 'today' && str2 == 'in'}">Today's check-in list</span>
+    <span th:if="${str1 == 'today' && str2 == 'out'}">Today's check-out list</span>
+    <span th:if="${str1 == 'soon' && str2 == 'in'}">Soon check-in list</span>
+    <span th:if="${str1 == 'soon' && str2 == 'out'}">Soon check-out list</span>
+</h1>
+<br/>
+<table>
+    <thead>
+    <tr>
+        <th>Guest full name</th>
+        <th>Room number</th>
+        <th>Date of check in</th>
+        <th>Date of check out</th>
+        <th>Guest info</th>
+        <th>Room info</th>
+        <th>Edit/delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b : ${booking}">
+        <td th:text="${b[0]}"></td>
+        <td th:text="${b[1]}"></td>
+        <td th:text="${b[2]}"></td>
+        <td th:text="${b[3]}"></td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest/{id}(id=${b[4]})}">
+                <input type="submit" value="Show guest"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/room/{id}(id=${b[5]})}">
+                <input type="submit" value="Show room"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/booking/{id}(id=${b[6]})}">
+                <input type="submit" value="Edit/delete"/>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/booking_by}">
+                <label for="fullName">Enter full name:</label>
+                <br/>
+                <input type="text" name="fullName" th:value="${fullName}" id="fullName"
+                       required
+                       pattern="^[a-zA-Z0-9 ]+$"
+                       title="Should not have special/math symbols!"
+                       placeholder="Literals/digits/space only!"/>
+                <br/>
+                <input type="submit" value="Find by name"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/booking_by}">
+                <label for="roomNumber">Enter room number:</label>
+                <br/>
+                <input type="text" name="roomNumber" th:value="${roomNumber}" id="roomNumber"
+                       required
+                       pattern="[0-9]+" minlength="2"
+                       title="Min 2 digit characters are required!"
+                       placeholder="Digits only!"/>
+                <br/>
+                <input type="submit" value="Find by room number"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/booking_by}">
+                <label for="checkIn">Enter check-in date:</label>
+                <br/>
+                <input type="date" name="checkIn" th:value="${checkIn}" id="checkIn"
+                       required
+                       placeholder="YYYY-MM-DD"/>
+                <br/>
+                <input type="submit" value="Find by check-in date"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/booking_by}">
+                <label for="checkOut">Enter check-out date:</label>
+                <br/>
+                <input type="date" name="checkOut" th:value="${checkOut}" id="checkOut"
+                       required
+                       placeholder="YYYY-MM-DD"/>
+                <br/>
+                <input type="submit" value="Find by check-out date"/>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${booking.size() == 0}">
+        <td colspan="6">
+            <p style="text-decoration: underline; font-weight: bold; color: red;">
+               List is empty!</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

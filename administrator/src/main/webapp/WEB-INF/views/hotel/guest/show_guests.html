@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Guests</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1>
+    <span th:if="${#strings.isEmpty(str)}">All guests</span>
+    <span th:switch="${str}">
+        <span th:case="'current'">Current guests</span>
+        <span th:case="'past'">Past guests</span>
+        <span th:case="'future'">Future guests</span>
+        <span th:case="'found'">Found guests</span>
+    </span>
+</h1>
+<br/>
+<table>
+    <tbody>
+    <tr>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest}">
+                <label for="fullName">Enter full name:</label>
+                <br/>
+                <input type="text" name="fullName" th:value="${fullName}" id="fullName"
+                       required
+                       pattern="^.*\S+.*$"
+                       title="Should have at least one non-space character!"
+                       placeholder="Full name"/>
+                <br/>
+                <input type="submit" value="Find by name"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest}">
+                <label for="passport">Enter passport data:</label>
+                <br/>
+                <input type="text" name="passport" th:value="${passport}" id="passport"
+                       required
+                       pattern="^[a-zA-Z0-9]+$"
+                       title="Should have literals and digits only!"
+                       placeholder="Literals/digits only!"/>
+                <br/>
+                <input type="submit" value="Find by passport"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest}">
+                <label for="phoneNumber">Enter phone number:</label>
+                <br/>
+                <input type="text" name="phoneNumber" th:value="${phoneNumber}" id="phoneNumber"
+                       required
+                       pattern="^\(\d{1,3}\)\d{9}$"
+                       title="Invalid format! Should be *(1-3 digits)9digits*!"
+                       placeholder="([1-3]x)xxxxxxxxx"/>
+                <br/>
+                <input type="submit" value="Find by phone number"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest}">
+                <label for="email">Enter email:</label>
+                <br/>
+                <input type="text" name="email" th:value="${email}" id="email"
+                       required
+                       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                       title="Invalid email address!"
+                       placeholder="xxx@xxx.xxx"/>
+                <br/>
+                <input type="submit" value="Find by email"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest}">
+                <label for="status">Enter guest status:</label>
+                <br/>
+                <input type="text" name="status" th:value="${status}" id="status"
+                       required
+                       pattern="(current|past|future)"
+                       title="Should be one of: current, past, future!"
+                       placeholder="current/past/future"/>
+                <br/>
+                <input type="submit" value="Find by status"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest}">
+                <label for="notes">Enter special notes:</label>
+                <br/>
+                <input type="text" name="notes" th:value="${notes}" id="notes"
+                       placeholder="great, blocked ect."/>
+                <br/>
+                <input type="submit" value="Find by notes"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th>Full Name</th>
+        <th>Passport</th>
+        <th>Phone number</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Notes</th>
+        <th>Booking info</th>
+        <th>Edit/delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="g : ${guests}">
+        <td th:text="${g.fullName}"></td>
+        <td th:text="${g.passport}"></td>
+        <td th:text="${g.phoneNumber}"></td>
+        <td th:text="${g.email}"></td>
+        <td th:text="${g.status}"></td>
+        <td th:text="${g.notes}"></td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/booking/guest_info}">
+                <input type="hidden" name="fullName" th:value="${g.fullName}"/>
+                <input type="submit" value="Find booking info"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/hotel_california/guest/{id}(id=${g.id})}">
+                <input type="submit" value="Edit/delete"/>
+            </form>
+        </td>
+    </tr>
+    <br>
+    <tr th:if="${guests.size() == 0}">
+        <td colspan="6">
+            <p style="text-decoration: underline; font-weight: bold; color: red;">
+                Guests list is empty!</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

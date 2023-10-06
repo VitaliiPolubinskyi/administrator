@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel California</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+    <script src="/js/script.js"></script>
+</head>
+<body>
+<h1>Hotel California starter page</h1>
+<br/>
+<div>
+<table>
+    <tr>
+        <td style="width: 33.3333%;">
+            <table>
+                <thead>
+                <tr>
+                    <th>Guests menu</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <form th:method="GET" th:action="@{/hotel_california/guests}">
+                            <input type="submit" value="Show all guests"/>
+                        </form>
+                        <br/>
+                        <form th:method="GET" th:action="@{/hotel_california/guests/current}">
+                            <input type="submit" value="Show current guests"/>
+                        </form>
+                        <br/>
+                        <form th:method="GET" th:action="@{/hotel_california/guests/future}">
+                            <input type="submit" value="Show future guests"/>
+                        </form>
+                        <br/>
+                        <form th:method="GET" th:action="@{/hotel_california/guests/past}">
+                            <input type="submit" value="Show past guests"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="width: 33.3333%;">
+            <table>
+                <thead>
+                <tr>
+                    <th>Today's actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <form th:method="GET" th:action="@{/hotel_california/booking/today/in}">
+                            <input type="submit" value="Show check-ins"/>
+                        </form>
+                        <br/>
+                        <form th:method="GET" th:action="@{/hotel_california/booking/today/out}">
+                            <input type="submit" value="Show check-outs"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="width: 33.3333%;">
+            <table>
+                <thead>
+                <tr>
+                    <th>General booking list</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <form th:method="GET" th:action="@{/hotel_california/booking}">
+                            <input type="submit" value="Show general list"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+<br/>
+<div>
+    <table>
+    <tr>
+        <td style="width: 50%;">
+            <table>
+                <thead>
+                <tr>
+                    <th colspan="2">Rooms menu</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <form th:method="GET" th:action="@{/hotel_california/rooms}">
+                            <input type="submit" value="Show all rooms"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:method="GET" th:action="@{/hotel_california/rooms/book}">
+                            <label for="in">Enter check-in date:</label>
+                            <br/>
+                            <input type="date" name="in" th:value="${in}" id="in"/>
+                            <br/>
+                            <label for="out">Enter check-out date:</label>
+                            <br/>
+                            <input type="date" name="out" th:value="${out}" id="out"/>
+                            <br/>
+                            <input type="submit" value="Find free rooms"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="width: 50%;">
+            <table>
+                <thead>
+                <tr>
+                    <th>Actions within two days</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <form th:method="GET" th:action="@{/hotel_california/booking/soon/in}">
+                            <input type="submit" value="Show check-ins"/>
+                        </form>
+                        <br/>
+                        <form th:method="GET" th:action="@{/hotel_california/booking/soon/out}">
+                            <input type="submit" value="Show check-outs"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

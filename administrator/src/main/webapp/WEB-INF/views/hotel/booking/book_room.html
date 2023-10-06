@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<body>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<h1>Create new booking</h1>
+<br/>
+<table>
+    <tbody>
+    <tr>
+        <form id="createForm" th:method="POST"
+              th:action="@{/hotel_california/book/room}"
+              th:object="${guest}">
+            <td>
+                <label for="fullName">Enter full name:</label>
+                <br/>
+                <input type="text" name="fullName" th:value="${fullName}" id="fullName"
+                       required
+                       pattern="^.*\S+.*$"
+                       title="Should have at least one non-space character!"
+                       placeholder="Full name"/>
+            </td>
+            <td>
+                <label for="passport">Enter passport data:</label>
+                <br/>
+                <input type="text" name="passport" th:value="${passport}" id="passport"
+                       required
+                       pattern="^[a-zA-Z0-9]+$"
+                       title="Should have literals and digits only!"
+                       placeholder="Literals/digits only!"/>
+            </td>
+            <td>
+                <label for="phoneNumber">Enter phone number:</label>
+                <br/>
+                <input type="text" name="phoneNumber" th:value="${phoneNumber}" id="phoneNumber"
+                       required
+                       pattern="^\(\d{1,3}\)\d{9}$"
+                       title="Invalid format! Should be *(1-3 digits)9digits*!"
+                       placeholder="([1-3]x)xxxxxxxxx"/>
+            </td>
+            <td>
+                <label for="email">Enter email:</label>
+                <br/>
+                <input type="text" name="email" th:value="${email}" id="email"
+                       required
+                       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                       title="Invalid email address!"
+                       placeholder="xxx@xxx.xxx"/>
+            </td>
+            <td>
+                <label for="status">Enter guest status:</label>
+                <br/>
+                <input type="text" name="status" th:value="${status}" id="status"
+                       required
+                       pattern="(current|past|future)"
+                       title="Should be one of: current, past, future!"
+                       placeholder="current/past/future"/>
+            </td>
+            <td>
+                <label for="notes">Enter special notes:</label>
+                <br/>
+                <input type="text" name="notes" th:value="${notes}" id="notes"
+                       placeholder="great, blocked ect."/>
+            </td>
+            <td>
+                <input type="hidden" name="roomNumber" th:value="${roomNumber}"/>
+                <input type="hidden" name="in" th:value="${in}"/>
+                <input type="hidden" name="out" th:value="${out}"/>
+                <input type="submit" value="Book the room" onclick="confirmSubmit('createForm')"/>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function confirmSubmit(formId) {
+       if (confirm("Are you sure?")) {
+           document.getElementById(formId).submit();
+        } else {
+           event.preventDefault();
+           return false;
+        }
+    }
+</script>
+
+</body>
+</html>

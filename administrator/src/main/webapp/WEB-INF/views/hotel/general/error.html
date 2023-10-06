@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<h1 style="color: red; text-decoration: underline;">
+    <span th:if="${message == null or message == ''}">Error occurred: bad gateway!</span>
+    <span th:if="${message != null}" th:text="'Error occurred: ' + ${message}"></span>
+</h1>
+<body>
+</body>
+</html>

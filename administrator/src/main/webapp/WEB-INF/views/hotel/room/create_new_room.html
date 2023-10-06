@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/styles.css">
+</head>
+<form th:method="GET" th:action="@{/hotel_california}">
+    <input type="submit" value="To homepage"/>
+</form>
+<body>
+<h1>Create new room</h1>
+<br/>
+<table>
+    <tbody>
+    <tr>
+        <form id="createForm" th:method="POST"
+              th:action="@{/hotel_california/rooms}"
+              th:object="${room}">
+            <td>
+                <label for="roomNumber">Enter room number:</label>
+                <br/>
+                <input type="text" th:field="*{roomNumber}" id="roomNumber"
+                       required
+                       pattern="[0-9]+" minlength="2"
+                       title="Min 2 digit characters are required!"
+                       placeholder="Digits only!"/>
+            </td>
+            <td>
+                <label for="classType">Enter class type:</label>
+                <br/>
+                <input type="text" th:field="*{classType}" id="classType"
+                       required
+                       pattern="(cheap|medium|expensive|luxury)"
+                       title="Should be 'cheap', 'medium', 'expensive' or 'luxury'!"
+                       placeholder="Literals only!"/>
+            </td>
+            <td>
+                <label for="price">Enter price:</label>
+                <br/>
+                <input type="number" th:field="*{price}" id="price" step="any"
+                       required
+                       title="Only numbers required!"
+                       placeholder="Digits only!"/>
+                <div style="color:red" th:if="${#fields.hasErrors('price')}"
+                     th:errors="*{price}"></div>
+            </td>
+            <td>
+                <label for="phoneNumber">Enter phone number:</label>
+                <br/>
+                <input type="text" th:field="*{phoneNumber}" id="phoneNumber"
+                       required
+                       pattern="[0-9]+" minlength="2"
+                       title="Min 2 digit characters are required!"
+                       placeholder="Digits only!"/>
+            </td>
+            <td>
+                <input type="submit" value="Create room" onclick="confirmSubmit('createForm')"/>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function confirmSubmit(formId) {
+       if (confirm("Are you sure?")) {
+           document.getElementById(formId).submit();
+        } else {
+           event.preventDefault();
+           return false;
+        }
+    }
+</script>
+
+</body>
+</html>
